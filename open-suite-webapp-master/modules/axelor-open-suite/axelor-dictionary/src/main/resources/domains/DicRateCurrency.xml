@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_8.1.xsd">
+
+  <module name="dictionary" package="com.axelor.apps.dictionary.db"/>
+
+  <entity name="DicRateCurrency">
+    <many-to-one name="currency" ref="DicCurrency" required="true" title="Currency"/>
+    <decimal name="rate" required="true" title="Exchange Rate"/>
+    <integer name="nominal" default="1" title="Nominal"/>
+    <date name="rateDate" required="true" title="Rate Date"/>
+    <string name="type" title="Type (Daily/Weekly)"/>
+  </entity>
+
+</domain-models>

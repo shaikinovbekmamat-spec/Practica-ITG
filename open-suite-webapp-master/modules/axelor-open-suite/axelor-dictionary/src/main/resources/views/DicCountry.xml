@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.1.xsd">
+
+  <grid name="dic-country-grid" title="Countries"
+    model="com.axelor.apps.dictionary.db.DicCountry">
+    <field name="name"/>
+    <field name="code"/>
+  </grid>
+
+  <form name="dic-country-form" title="Country"
+    model="com.axelor.apps.dictionary.db.DicCountry">
+    <panel name="main-panel">
+      <field name="name"/>
+      <field name="code"/>
+    </panel>
+  </form>
+
+</object-views>

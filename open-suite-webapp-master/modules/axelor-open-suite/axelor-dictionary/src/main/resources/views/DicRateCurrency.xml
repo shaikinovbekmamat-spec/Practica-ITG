@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.1.xsd">
+
+  <grid name="dic-rate-currency-grid" title="Exchange Rates"
+    model="com.axelor.apps.dictionary.db.DicRateCurrency">
+    <toolbar>
+      <button name="btnUpdateRates" title="Update Rates from NBKR" icon="fa-refresh"
+        onClick="action-dictionary-method-update-rates"/>
+    </toolbar>
+    <field name="currency"/>
+    <field name="rate"/>
+    <field name="nominal"/>
+    <field name="rateDate"/>
+    <field name="type"/>
+  </grid>
+
+  <form name="dic-rate-currency-form" title="Exchange Rate"
+    model="com.axelor.apps.dictionary.db.DicRateCurrency">
+    <panel name="main-panel">
+      <field name="currency"/>
+      <field name="rate"/>
+      <field name="nominal"/>
+      <field name="rateDate"/>
+      <field name="type"/>
+    </panel>
+  </form>
+
+  <action-method name="action-dictionary-method-update-rates">
+    <call class="com.axelor.apps.dictionary.web.NbkrController" method="updateRates"/>
+  </action-method>
+
+</object-views>
