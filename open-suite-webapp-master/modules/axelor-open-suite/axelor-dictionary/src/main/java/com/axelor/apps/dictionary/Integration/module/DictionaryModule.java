@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.dictionary.module;
+package com.axelor.apps.dictionary.Integration.module;
 
 import com.axelor.app.AxelorModule;
-import com.axelor.apps.dictionary.service.NbkrService;
-import com.axelor.apps.dictionary.service.NbkrServiceImpl;
+import com.axelor.apps.dictionary.Integration.service.Impt.NbkrServiceImpl;
+import com.axelor.apps.dictionary.Integration.service.NbkrService;
 
 public class DictionaryModule extends AxelorModule {
 

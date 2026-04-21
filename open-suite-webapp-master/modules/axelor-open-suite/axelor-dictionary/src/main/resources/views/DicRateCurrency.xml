@@ -28,7 +28,8 @@
   </form>
 
   <action-method name="action-dictionary-method-update-rates">
-    <call class="com.axelor.apps.dictionary.web.NbkrController" method="updateRates"/>
+    <call class="com.axelor.apps.dictionary.Integration.web.NbkrController"
+      method="updateRates"/>
   </action-method>
 
 </object-views>

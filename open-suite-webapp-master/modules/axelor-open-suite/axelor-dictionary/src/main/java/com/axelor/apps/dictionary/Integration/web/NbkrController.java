@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.dictionary.web;
+package com.axelor.apps.dictionary.Integration.web;
 
 import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.dictionary.service.NbkrService;
+import com.axelor.apps.dictionary.Integration.service.NbkrService;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
