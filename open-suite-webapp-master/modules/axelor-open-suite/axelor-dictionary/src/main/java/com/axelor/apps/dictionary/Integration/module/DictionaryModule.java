@@ -21,11 +21,13 @@ package com.axelor.apps.dictionary.Integration.module;
 import com.axelor.app.AxelorModule;
 import com.axelor.apps.dictionary.Integration.service.Impt.NbkrServiceImpl;
 import com.axelor.apps.dictionary.Integration.service.NbkrService;
+import com.axelor.apps.dictionary.rateReport.ExchangeRateReportService;
 
 public class DictionaryModule extends AxelorModule {
 
   @Override
   protected void configure() {
     bind(NbkrService.class).to(NbkrServiceImpl.class);
+    bind(ExchangeRateReportService.class);
   }
 }

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.27" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.23.0.v202512100941</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DATA_SOURCE" id="4">
+            <property name="hidden">true</property>
+            <text-property name="promptText">DATA_SOURCE</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="ScriptedDS" id="5"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="ExchangeRatesDS" id="6">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">0</property>
+                    <property name="name">code</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">rateDate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">rate</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">code</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rateDate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rate</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">rateDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">rate</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ScriptedDS</property>
+            <method name="open"><![CDATA[importPackage(Packages.com.fasterxml.jackson.databind);
+
+var json = params["DATA_SOURCE"].value;
+
+if (json != null &amp;&amp; json != "") {
+    var mapper = new ObjectMapper();
+    jsonArray = mapper.readTree(json);
+    index = 0;
+} else {
+    jsonArray = null;
+    index = 0;
+}]]></method>
+            <method name="fetch"><![CDATA[if (jsonArray != null &amp;&amp; index < jsonArray.size()) {
+    var item = jsonArray.get(index);
+
+    row["code"] = item.get("code") != null ? item.get("code").asText() : "";
+    row["rateDate"] = item.get("rateDate") != null ? item.get("rateDate").asText() : "";
+    row["rate"] = item.get("rate") != null ? item.get("rate").asDouble() : 0;
+
+    index++;
+    return true;
+}
+return false;]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="23">
+            <property name="dataSet">ExchangeRatesDS</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">code</property>
+                    <text-property name="displayName">code</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["code"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">rateDate</property>
+                    <text-property name="displayName">rateDate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["rateDate"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">rate</property>
+                    <text-property name="displayName">rate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["rate"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <column id="42"/>
+            <column id="43"/>
+            <column id="44"/>
+            <header>
+                <row id="24">
+                    <cell id="25">
+                        <label id="26">
+                            <text-property name="text">code</text-property>
+                        </label>
+                    </cell>
+                    <cell id="27">
+                        <label id="28">
+                            <text-property name="text">rateDate</text-property>
+                        </label>
+                    </cell>
+                    <cell id="29">
+                        <label id="30">
+                            <text-property name="text">rate</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="31">
+                    <cell id="32">
+                        <data id="33">
+                            <property name="resultSetColumn">code</property>
+                        </data>
+                    </cell>
+                    <cell id="34">
+                        <data id="35">
+                            <property name="resultSetColumn">rateDate</property>
+                        </data>
+                    </cell>
+                    <cell id="36">
+                        <data id="37">
+                            <property name="resultSetColumn">rate</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="38">
+                    <cell id="39"/>
+                    <cell id="40"/>
+                    <cell id="41"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
