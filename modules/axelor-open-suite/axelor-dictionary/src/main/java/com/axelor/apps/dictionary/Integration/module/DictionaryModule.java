@@ -1,0 +1,43 @@
+/*
+ * Axelor Business Solutions
+ *
+ * Copyright (C) 2005-2026 Axelor (<http://axelor.com>).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+package com.axelor.apps.dictionary.Integration.module;
+
+import com.axelor.app.AxelorModule;
+import com.axelor.apps.dictionary.Integration.service.Impt.NbkrServiceImpl;
+import com.axelor.apps.dictionary.Integration.service.NbkrService;
+import com.axelor.apps.dictionary.rateReport.service.ExchangeRateReportService;
+import com.axelor.apps.dictionary.rateReport.service.GroupedExchangeRateReportService;
+import com.axelor.apps.dictionary.rateReport.controller.ExchangeRateReportController;
+import com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController;
+
+public class DictionaryModule extends AxelorModule {
+
+  @Override
+  protected void configure() {
+    bind(NbkrService.class).to(NbkrServiceImpl.class);
+    
+    // Регистрация сервисов отчетов
+    bind(ExchangeRateReportService.class);
+    bind(GroupedExchangeRateReportService.class);
+    
+    // Регистрация контроллеров отчетов
+    bind(ExchangeRateReportController.class);
+    bind(GroupedExchangeRateReportController.class);
+  }
+}

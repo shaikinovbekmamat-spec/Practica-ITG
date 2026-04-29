@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.27" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.23.0.v202512100941</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="DATA_SOURCE" id="4">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="ScriptedDS" id="6"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="ExchangeRatesGroupedDS" id="7">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">0</property>
+                    <property name="name">currencyCode</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">currencyName</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">rateDate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">rateValue</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">currencyCode</property>
+                </structure>
+                <structure>
+                    <property name="columnName">currencyName</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rateDate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rateValue</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">currencyCode</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">currencyName</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">rateDate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">rateValue</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">ScriptedDS</property>
+            <method name="open"><![CDATA[importPackage(Packages.com.fasterxml.jackson.databind);
+
+var json = params["DATA_SOURCE"].value;
+
+if (json != null &amp;&amp; json != "") {
+    var mapper = new ObjectMapper();
+    jsonArray = mapper.readTree(json);
+    index = 0;
+} else {
+    jsonArray = null;
+    index = 0;
+}]]></method>
+            <method name="fetch"><![CDATA[if (jsonArray != null &amp;&amp; index < jsonArray.size()) {
+    var item = jsonArray.get(index);
+
+    row["currencyCode"] = item.get("currencyCode") != null ? item.get("currencyCode").asText() : "";
+    row["currencyName"] = item.get("currencyName") != null ? item.get("currencyName").asText() : "";
+    row["rateDate"] = item.get("rateDate") != null ? item.get("rateDate").asText() : "";
+    row["rateValue"] = item.get("rateValue") != null ? item.get("rateValue").asDouble() : 0;
+
+    index++;
+    return true;
+}
+
+return false;]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <label id="8">
+            <property name="fontSize">16pt</property>
+            <property name="textAlign">center</property>
+            <text-property name="text">Отчет группированный по валютам.</text-property>
+        </label>
+        <table id="9">
+            <property name="dataSet">ExchangeRatesGroupedDS</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">currencyCode</property>
+                    <text-property name="displayName">currencyCode</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["currencyCode"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">currencyName</property>
+                    <text-property name="displayName">currencyName</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["currencyName"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">rateDate</property>
+                    <text-property name="displayName">rateDate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["rateDate"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">rateValue</property>
+                    <text-property name="displayName">rateValue</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["rateValue"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <column id="33"/>
+            <column id="34"/>
+            <column id="35"/>
+            <column id="36"/>
+            <header>
+                <row id="10">
+                    <cell id="11">
+                        <label id="12">
+                            <text-property name="text">Код валюты</text-property>
+                        </label>
+                    </cell>
+                    <cell id="13">
+                        <label id="14">
+                            <text-property name="text">Наименование валюты</text-property>
+                        </label>
+                    </cell>
+                    <cell id="15">
+                        <label id="16">
+                            <text-property name="text">Дата курса </text-property>
+                        </label>
+                    </cell>
+                    <cell id="17">
+                        <label id="18">
+                            <text-property name="text">Курс валюты</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="59">
+                <property name="groupName">CurrencyGroup</property>
+                <expression name="keyExpr" type="javascript">row["currencyCode"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["currencyCode"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="60">
+                        <cell id="61">
+                            <data id="70">
+                                <property name="fontSize">14pt</property>
+                                <property name="textAlign">center</property>
+                                <property name="resultSetColumn">currencyCode</property>
+                            </data>
+                        </cell>
+                        <cell id="62"/>
+                        <cell id="63"/>
+                        <cell id="64"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="65">
+                        <cell id="66"/>
+                        <cell id="67"/>
+                        <cell id="68"/>
+                        <cell id="69"/>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="19">
+                    <cell id="20">
+                        <data id="21">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">currencyCode</property>
+                        </data>
+                    </cell>
+                    <cell id="22">
+                        <data id="23">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">currencyName</property>
+                        </data>
+                    </cell>
+                    <cell id="24">
+                        <data id="25">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">rateDate</property>
+                        </data>
+                    </cell>
+                    <cell id="26">
+                        <data id="27">
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">rateValue</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="28">
+                    <cell id="29"/>
+                    <cell id="30"/>
+                    <cell id="31"/>
+                    <cell id="32"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

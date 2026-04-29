@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<access-configs xmlns="http://axelor.com/xml/ns/access-configs"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/access-configs http://axelor.com/xml/ns/access-configs/access-configs_8.1.xsd">
+
+  <access-config model="com.axelor.apps.dictionary.db.DicCountry" role="ADMIN"
+    canRead="true" canWrite="true" canCreate="true" canDelete="true"/>
+  <access-config model="com.axelor.apps.dictionary.db.DicCurrency" role="ADMIN"
+    canRead="true" canWrite="true" canCreate="true" canDelete="true"/>
+  <access-config model="com.axelor.apps.dictionary.db.DicRateCurrency" role="ADMIN"
+    canRead="true" canWrite="true" canCreate="true" canDelete="true"/>
+
+</access-configs>

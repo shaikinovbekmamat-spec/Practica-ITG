@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_8.1.xsd">
+
+  <grid name="dic-currency-grid" title="Currencies"
+    model="com.axelor.apps.dictionary.db.DicCurrency">
+    <toolbar>
+      <button name="btnPrint" title="Print" icon="fa-print" onClick="action-dic-currency-method-print-grouped-report"/>
+    </toolbar>
+    <field name="name"/>
+    <field name="code"/>
+    <field name="countryCode"/>
+  </grid>
+
+  <form name="dic-currency-form" title="Currency"
+    model="com.axelor.apps.dictionary.db.DicCurrency">
+    <toolbar>
+      <button name="btnPrint" title="Print" icon="fa-print" onClick="action-dic-currency-method-print-grouped-report"/>
+    </toolbar>
+    <panel name="main-panel">
+      <field name="name"/>
+      <field name="code"/>
+      <field name="countryCode"/>
+    </panel>
+  </form>
+
+  <action-method name="action-dic-currency-method-print-grouped-report">
+    <call class="com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController" method="printReport"/>
+  </action-method>
+
+</object-views>

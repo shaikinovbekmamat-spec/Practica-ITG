@@ -1,0 +1,21 @@
+plugins {
+	id 'com.axelor.app'
+}
+
+apply from: "../libs.gradle"
+apply from: "../version.gradle"
+
+apply {
+	version = openSuiteVersion
+}
+
+axelor {
+	title "Axelor Dictionary"
+	description "Axelor Dictionary Module for Country and Currency Management"
+}
+
+dependencies {
+	api project(":modules:axelor-base")
+	compileOnly 'org.projectlombok:lombok:1.18.36'
+	annotationProcessor 'org.projectlombok:lombok:1.18.36'
+}
