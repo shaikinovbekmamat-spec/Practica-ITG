@@ -21,7 +21,7 @@
   <form name="dic-rate-currency-form" title="Exchange Rate"
     model="com.axelor.apps.dictionary.db.DicRateCurrency">
     <toolbar>
-      <button name="btnPrintReport" title="Print Report" icon="fa-print"
+      <button name="btnPrint" title="Print" icon="fa-print"
         onClick="save,action-dictionary-method-print-report"/>
     </toolbar>
     <panel name="main-panel">

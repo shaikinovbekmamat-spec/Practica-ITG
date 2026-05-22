@@ -16,20 +16,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.dictionary.Integration.Helper;
+package com.axelor.apps.dictionary.actionlog.annotation;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.Unmarshaller;
-import java.io.StringReader;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class XmlHelper {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface ActionLog {
 
-  @SuppressWarnings("unchecked")
-  public static <T> T unmarshal(String xml, Class<T> clazz) throws Exception {
-    JAXBContext context = JAXBContext.newInstance(clazz);
-    Unmarshaller unmarshaller = context.createUnmarshaller();
-    try (StringReader reader = new StringReader(xml)) {
-      return (T) unmarshaller.unmarshal(reader);
-    }
-  }
+  String action() default "";
 }

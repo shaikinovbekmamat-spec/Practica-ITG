@@ -21,23 +21,40 @@ package com.axelor.apps.dictionary.Integration.module;
 import com.axelor.app.AxelorModule;
 import com.axelor.apps.dictionary.Integration.service.Impt.NbkrServiceImpl;
 import com.axelor.apps.dictionary.Integration.service.NbkrService;
-import com.axelor.apps.dictionary.rateReport.service.ExchangeRateReportService;
-import com.axelor.apps.dictionary.rateReport.service.GroupedExchangeRateReportService;
+import com.axelor.apps.dictionary.actionlog.annotation.ActionLog;
+import com.axelor.apps.dictionary.actionlog.interceptor.ActionLogInterceptor;
+import com.axelor.apps.dictionary.actionlog.observer.SecurityEventObserver;
+import com.axelor.apps.dictionary.actionlog.service.ActionLogContextService;
+import com.axelor.apps.dictionary.actionlog.service.ActionLogService;
+import com.axelor.apps.dictionary.actionlog.service.SecondDbActionLogService;
+import com.axelor.apps.dictionary.db.repo.DicRateCurrencyRepositoryRepo;
+import com.axelor.apps.dictionary.db.repo.DicRateCurrencyRepository;
 import com.axelor.apps.dictionary.rateReport.controller.ExchangeRateReportController;
 import com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController;
+import com.axelor.apps.dictionary.rateReport.service.ExchangeRateReportService;
+import com.axelor.apps.dictionary.rateReport.service.GroupedExchangeRateReportService;
+import com.google.inject.matcher.Matchers;
 
 public class DictionaryModule extends AxelorModule {
 
   @Override
   protected void configure() {
     bind(NbkrService.class).to(NbkrServiceImpl.class);
-    
-    // Регистрация сервисов отчетов
+    bind(DicRateCurrencyRepository.class).to(DicRateCurrencyRepositoryRepo.class);
+
     bind(ExchangeRateReportService.class);
     bind(GroupedExchangeRateReportService.class);
-    
-    // Регистрация контроллеров отчетов
+
     bind(ExchangeRateReportController.class);
     bind(GroupedExchangeRateReportController.class);
+
+    bind(ActionLogContextService.class);
+    bind(SecondDbActionLogService.class);
+    bind(ActionLogService.class);
+    bind(SecurityEventObserver.class).asEagerSingleton();
+
+    ActionLogInterceptor interceptor = new ActionLogInterceptor();
+    requestInjection(interceptor);
+    bindInterceptor(Matchers.any(), Matchers.annotatedWith(ActionLog.class), interceptor);
   }
 }

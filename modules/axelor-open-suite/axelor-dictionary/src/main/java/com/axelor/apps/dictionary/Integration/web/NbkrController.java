@@ -20,6 +20,7 @@ package com.axelor.apps.dictionary.Integration.web;
 
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.dictionary.Integration.service.NbkrService;
+import com.axelor.apps.dictionary.actionlog.annotation.ActionLog;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
@@ -33,6 +34,7 @@ public class NbkrController {
     this.nbkrService = nbkrService;
   }
 
+  @ActionLog(action = "FETCH_NBKR_RATES")
   public void updateRates(ActionRequest request, ActionResponse response) throws AxelorException {
     try {
       nbkrService.updateRates();

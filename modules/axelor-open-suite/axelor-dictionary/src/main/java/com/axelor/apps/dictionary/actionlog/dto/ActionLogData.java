@@ -16,20 +16,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.dictionary.Integration.Helper;
+package com.axelor.apps.dictionary.actionlog.dto;
 
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.Unmarshaller;
-import java.io.StringReader;
+import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public class XmlHelper {
+@Getter
+@Setter
+public class ActionLogData {
 
-  @SuppressWarnings("unchecked")
-  public static <T> T unmarshal(String xml, Class<T> clazz) throws Exception {
-    JAXBContext context = JAXBContext.newInstance(clazz);
-    Unmarshaller unmarshaller = context.createUnmarshaller();
-    try (StringReader reader = new StringReader(xml)) {
-      return (T) unmarshaller.unmarshal(reader);
-    }
-  }
+  private String action;
+
+  private Long userId;
+
+  private String ipAddress;
+
+  private String httpMethod;
+
+  private String requestBody;
+
+  private String serviceName;
+
+  private String errorMessage;
+
+  private String stackTrace;
+
+  private LocalDateTime createdOn;
 }

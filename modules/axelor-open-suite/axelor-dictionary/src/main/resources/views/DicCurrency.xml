@@ -6,7 +6,8 @@
   <grid name="dic-currency-grid" title="Currencies"
     model="com.axelor.apps.dictionary.db.DicCurrency">
     <toolbar>
-      <button name="btnPrint" title="Print" icon="fa-print" onClick="action-dic-currency-method-print-grouped-report"/>
+      <button name="btnPrint" title="Print" icon="fa-print"
+        onClick="action-dic-currency-method-print-grouped-report"/>
     </toolbar>
     <field name="name"/>
     <field name="code"/>
@@ -16,7 +17,8 @@
   <form name="dic-currency-form" title="Currency"
     model="com.axelor.apps.dictionary.db.DicCurrency">
     <toolbar>
-      <button name="btnPrint" title="Print" icon="fa-print" onClick="action-dic-currency-method-print-grouped-report"/>
+      <button name="btnPrint" title="Print" icon="fa-print"
+        onClick="action-dic-currency-method-print-grouped-report"/>
     </toolbar>
     <panel name="main-panel">
       <field name="name"/>
@@ -26,7 +28,9 @@
   </form>
 
   <action-method name="action-dic-currency-method-print-grouped-report">
-    <call class="com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController" method="printReport"/>
+    <call
+      class="com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController"
+      method="printReport"/>
   </action-method>
 
 </object-views>

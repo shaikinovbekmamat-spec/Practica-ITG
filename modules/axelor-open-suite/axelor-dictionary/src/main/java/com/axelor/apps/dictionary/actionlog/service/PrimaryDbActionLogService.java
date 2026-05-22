@@ -1,0 +1,52 @@
+package com.axelor.apps.dictionary.actionlog.service;
+
+import com.axelor.apps.dictionary.actionlog.dto.ActionLogData;
+import com.axelor.apps.dictionary.db.ActionLogEntity;
+import com.axelor.apps.dictionary.db.repo.ActionLogEntityRepository;
+import com.axelor.inject.Beans;
+import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Singleton
+public class PrimaryDbActionLogService {
+
+  private static final Logger log = LoggerFactory.getLogger(PrimaryDbActionLogService.class);
+
+  public void saveLog(ActionLogData data) throws Exception {
+    try {
+      ActionLogEntity logEntry = new ActionLogEntity();
+      logEntry.setAction(data.getAction());
+      logEntry.setUserId(data.getUserId() != null ? data.getUserId().intValue() : null);
+      logEntry.setIpAddress(data.getIpAddress());
+      logEntry.setHttpMethod(data.getHttpMethod());
+      logEntry.setRequestBody(data.getRequestBody());
+      logEntry.setServiceName(data.getServiceName());
+      logEntry.setCreatedOn(data.getCreatedOn());
+
+      Beans.get(ActionLogEntityRepository.class).save(logEntry);
+    } catch (Exception e) {
+      log.error("Error saving log to primary database", e);
+      throw e;
+    }
+  }
+
+  public void updateError(ActionLogData data) {
+    try {
+      ActionLogEntityRepository repo = Beans.get(ActionLogEntityRepository.class);
+      ActionLogEntity logEntry =
+          repo.all()
+              .filter(
+                  "self.action = ?1 AND self.createdOn = ?2", data.getAction(), data.getCreatedOn())
+              .fetchOne();
+
+      if (logEntry != null) {
+        logEntry.setErrorMessage(data.getErrorMessage());
+        logEntry.setStackTrace(data.getStackTrace());
+        repo.save(logEntry);
+      }
+    } catch (Exception e) {
+      log.error("Failed to update error in primary log", e);
+    }
+  }
+}

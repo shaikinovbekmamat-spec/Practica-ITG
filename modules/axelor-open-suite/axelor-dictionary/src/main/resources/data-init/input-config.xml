@@ -35,7 +35,8 @@
     <bind column="countryCode" to="countryCode"/>
   </input>
 
-  <input file="dictionary_birt-template.csv" separator=";" type="com.axelor.apps.base.db.BirtTemplate" search="self.name = :name" update="true">
+  <input file="dictionary_birt-template.csv" separator=";"
+    type="com.axelor.apps.base.db.BirtTemplate" search="self.name = :name" update="true">
     <bind column="metaModel" to="metaModel" search="self.fullName = :metaModel"/>
   </input>
 
