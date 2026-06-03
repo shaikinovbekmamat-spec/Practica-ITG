@@ -8,6 +8,8 @@
     <toolbar>
       <button name="btnPrint" title="Print" icon="fa-print"
         onClick="action-dic-currency-method-print-grouped-report"/>
+      <button name="btnDownloadImageReport" title="Download" icon="fa-download"
+        onClick="save,action-dic-currency-view-image-report-download-wizard"/>
     </toolbar>
     <field name="name"/>
     <field name="code"/>
@@ -19,11 +21,26 @@
     <toolbar>
       <button name="btnPrint" title="Print" icon="fa-print"
         onClick="action-dic-currency-method-print-grouped-report"/>
+      <button name="btnDownloadImageReport" title="Download" icon="fa-download"
+        onClick="save,action-dic-currency-view-image-report-download-wizard"/>
     </toolbar>
     <panel name="main-panel">
       <field name="name"/>
       <field name="code"/>
       <field name="countryCode"/>
+      <spacer colSpan="12"/>
+      <label title="Report Settings" colSpan="12" css="label-bold"/>
+      <field name="image" widget="Image" colSpan="8"/>
+    </panel>
+  </form>
+
+  <form name="dic-currency-image-report-download-wizard-form" title="Download image report"
+    model="com.axelor.utils.db.Wizard">
+    <panel name="main-panel">
+      <button name="downloadPdfBtn" title="PDF" icon="fa-file-pdf-o"
+        onClick="action-dic-currency-method-download-image-pdf,close" colSpan="6"/>
+      <button name="downloadWordBtn" title="Word" icon="fa-file-word-o"
+        onClick="action-dic-currency-method-download-image-word,close" colSpan="6"/>
     </panel>
   </form>
 
@@ -32,5 +49,32 @@
       class="com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController"
       method="printReport"/>
   </action-method>
+
+  <action-method name="action-dic-currency-method-show-image">
+    <call class="com.axelor.apps.dictionary.rateReport.controller.ImageReportController"
+      method="showImage"/>
+  </action-method>
+
+  <action-method name="action-dic-currency-method-download-image-pdf">
+    <call class="com.axelor.apps.dictionary.rateReport.controller.ImageReportController"
+      method="downloadImagePdf"/>
+  </action-method>
+
+  <action-method name="action-dic-currency-method-download-image-word">
+    <call class="com.axelor.apps.dictionary.rateReport.controller.ImageReportController"
+      method="downloadImageWord"/>
+  </action-method>
+
+  <action-view name="action-dic-currency-view-image-report-download-wizard"
+    title="Download image report" model="com.axelor.utils.db.Wizard">
+    <view type="form" name="dic-currency-image-report-download-wizard-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="forceEdit" value="true"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="show-confirm" value="false"/>
+    <view-param name="popup-save" value="false"/>
+    <context name="_currencyId" expr="eval: id"/>
+    <context name="_currencyIds" expr="eval: _ids"/>
+  </action-view>
 
 </object-views>

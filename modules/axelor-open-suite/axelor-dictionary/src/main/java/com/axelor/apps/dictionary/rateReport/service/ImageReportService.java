@@ -16,19 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.axelor.apps.dictionary.actionlog.service;
+package com.axelor.apps.dictionary.rateReport.service;
 
-import jakarta.inject.Singleton;
+import com.axelor.apps.dictionary.db.DicCurrency;
 
-@Singleton
-public class ActionLogExceptionService {
+public interface ImageReportService {
 
-  public String getStackTraceAsString(Throwable e) {
-    if (e == null) return "";
-    StringBuilder sb = new StringBuilder();
-    for (StackTraceElement element : e.getStackTrace()) {
-      sb.append(element).append("\n");
-    }
-    return sb.toString();
-  }
+  String generateImageReport(DicCurrency currency, String format) throws Exception;
 }

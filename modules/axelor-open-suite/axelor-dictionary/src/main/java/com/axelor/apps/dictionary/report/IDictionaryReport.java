@@ -22,4 +22,6 @@ public interface IDictionaryReport {
 
   public static final String EXCHANGE_RATES_REPORT = "exchange_rates.rptdesign";
   public static final String EXCHANGE_RATES_GROUPED_REPORT = "exchange_rates_grouped.rptdesign";
+  public static final String IMAGE_VIEWER_REPORT = "image_viewer.rptdesign";
+  public static final String EMPLOYEE_REPORT = "EmployeeReport.rptdesign";
 }

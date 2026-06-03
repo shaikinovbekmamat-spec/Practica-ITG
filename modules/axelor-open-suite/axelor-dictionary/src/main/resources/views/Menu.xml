@@ -14,6 +14,9 @@
   <menuitem name="dictionary-rate-currencies" parent="dictionary-menu"
     title="Exchange Rates" action="action-dictionary-rate-currency-view" order="3"/>
 
+  <menuitem name="dictionary-employees" parent="dictionary-menu" title="Employees"
+    action="action-dictionary-employee-view" order="4"/>
+
   <action-view name="action-dictionary-country-view" title="Countries"
     model="com.axelor.apps.dictionary.db.DicCountry">
     <view type="grid" name="dic-country-grid"/>
@@ -30,6 +33,12 @@
     model="com.axelor.apps.dictionary.db.DicRateCurrency">
     <view type="grid" name="dic-rate-currency-grid"/>
     <view type="form" name="dic-rate-currency-form"/>
+  </action-view>
+
+  <action-view name="action-dictionary-employee-view" title="Employees"
+    model="com.axelor.apps.dictionary.db.DicEmployee">
+    <view type="grid" name="dic-employee-grid"/>
+    <view type="form" name="dic-employee-form"/>
   </action-view>
 
 </object-views>

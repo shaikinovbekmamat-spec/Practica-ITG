@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.9.0.v202203150031</property>
+    <property name="units">cm</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="JsonData" id="6729">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">{"address":null,"birthDay":"1992-04-08","citizenship":"Кыргызстан","education":null,"fullName":"250010 - Manas Abdugani uulu","graduated":null,"nationality":"Кыргыз(ка)","disciplinarySanctions":null,"imageBytes":null,"workActivities":[{"introductionDate":"2025-04-01","careDate":"2025-05-23","nameOfInstitution":null,"positionHeld":"ЗАМЕСТИТЕЛЬ НАЧАЛЬНИКА УПРАВЛЕНИЯ ГТС"}]}</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="Data Source" id="6302"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="Data Set" id="6344">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">fullName</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">birthDay</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">address</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">nationality</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">citizenship</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">education</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">graduated</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">disciplinarySanctions</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">imageBytes</property>
+                    <property name="dataType">blob</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">fullName</property>
+                </structure>
+                <structure>
+                    <property name="columnName">birthDay</property>
+                </structure>
+                <structure>
+                    <property name="columnName">address</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nationality</property>
+                </structure>
+                <structure>
+                    <property name="columnName">citizenship</property>
+                </structure>
+                <structure>
+                    <property name="columnName">education</property>
+                </structure>
+                <structure>
+                    <property name="columnName">graduated</property>
+                </structure>
+                <structure>
+                    <property name="columnName">disciplinarySanctions</property>
+                </structure>
+                <structure>
+                    <property name="columnName">imageBytes</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">fullName</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">birthDay</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">address</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">nationality</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">citizenship</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">education</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">graduated</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">disciplinarySanctions</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">imageBytes</property>
+                        <property name="dataType">blob</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage(Packages.com.fasterxml.jackson.databind);
+var jsonString = params["JsonData"].value;
+if (jsonString != null && jsonString != "") {
+    var mapper = new ObjectMapper();
+    dataObject = mapper.readTree(jsonString);
+    rowIndex = 0;
+} else {
+    dataObject = null;
+    rowIndex = 0;
+}]]></method>
+            <property name="dataSource">Data Source</property>
+            <method name="fetch"><![CDATA[if (dataObject != null && rowIndex === 0) {
+    row["address"] = dataObject.get("address") != null ? dataObject.get("address").asText() : "";
+    row["birthDay"] = dataObject.get("birthDay") != null ? dataObject.get("birthDay").asText() : null;
+    row["citizenship"] = dataObject.get("citizenship") != null ? dataObject.get("citizenship").asText() : "";
+    row["education"] = dataObject.get("education") != null ? dataObject.get("education").asText() : "";
+    row["fullName"] = dataObject.get("fullName") != null ? dataObject.get("fullName").asText() : "";
+    row["graduated"] = dataObject.get("graduated") != null ? dataObject.get("graduated").asText() : "";
+    row["nationality"] = dataObject.get("nationality") != null ? dataObject.get("nationality").asText() : "";
+    row["disciplinarySanctions"] = dataObject.get("disciplinarySanctions") != null ? dataObject.get("disciplinarySanctions").asText() : "";
+    
+    var imageNode = dataObject.get("imageBytes");
+    if (imageNode != null && !imageNode.isNull()) {
+        try {
+            // Используем явный вызов пакета Java для декодирования Base64
+            row["imageBytes"] = Packages.java.util.Base64.getDecoder().decode(imageNode.asText());
+        } catch (e) {
+            // Фолбэк на встроенный метод Jackson, если Base64 не сработал
+            row["imageBytes"] = imageNode.binaryValue();
+        }
+    } else {
+        row["imageBytes"] = null;
+    }
+    
+    rowIndex++;
+    return true;
+} else {
+    return false;
+}]]></method>
+        </script-data-set>
+        <script-data-set name="workActivities" id="7230">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">introductionDate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">careDate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">nameOfInstitution</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">positionHeld</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">introductionDate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">careDate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nameOfInstitution</property>
+                </structure>
+                <structure>
+                    <property name="columnName">positionHeld</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">introductionDate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">careDate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">nameOfInstitution</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">positionHeld</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[importPackage(Packages.com.fasterxml.jackson.databind);
+var jsonString = params["JsonData"].value;
+if (jsonString != null && jsonString != "") {
+    var mapper = new ObjectMapper();
+    var root = mapper.readTree(jsonString);
+    dataArray = root.get("workActivities");
+} else {
+    dataArray = null;
+}
+rowIndex = 0;]]></method>
+            <property name="dataSource">Data Source</property>
+            <method name="fetch"><![CDATA[if (dataArray != null && rowIndex < dataArray.size()) {
+    var record = dataArray.get(rowIndex);
+    row["introductionDate"] = record.get("introductionDate") != null ? record.get("introductionDate").asText() : null;
+    row["careDate"] = record.get("careDate") != null ? record.get("careDate").asText() : null;
+    row["nameOfInstitution"] = record.get("nameOfInstitution") != null ? record.get("nameOfInstitution").asText() : null;
+    row["positionHeld"] = record.get("positionHeld") != null ? record.get("positionHeld").asText() : null;
+    rowIndex++;
+    return true;
+} else {
+    return false;
+}]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="leftMargin">0.635cm</property>
+            <property name="bottomMargin">0.23958333333333334in</property>
+            <property name="rightMargin">0.396875cm</property>
+            <property name="headerHeight">1.4cm</property>
+            <property name="footerHeight">0.8cm</property>
+            <page-footer>
+                <text id="3">
+                    <property name="fontFamily">"Times New Roman"</property>
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="7005">
+            <property name="height">4cm</property>
+            <column id="7006"/>
+            <row id="7007">
+                <property name="height">4cm</property>
+                <cell id="7008">
+                    <grid id="7318">
+                        <property name="height">4cm</property>
+                        <column id="7319">
+                            <property name="width">3.2cm</property>
+                        </column>
+                        <column id="7320">
+                            <property name="width">17.040625cm</property>
+                        </column>
+                        <row id="7321">
+                            <property name="height">4cm</property>
+                            <cell id="7322">
+                                <image id="7354">
+                                    <property name="height">4cm</property>
+                                    <property name="width">3cm</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">imageBytes</property>
+                                            <text-property name="displayName">imageBytes</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["imageBytes"]</expression>
+                                            <property name="dataType">blob</property>
+                                        </structure>
+                                    </list-property>
+                                    <list-property name="visibility">
+                                        <structure>
+                                            <property name="format">all</property>
+                                            <expression name="valueExpr" type="javascript">dataSetRow["imageBytes"] == null</expression>  <!-- строка 331: row → dataSetRow -->
+                                        </structure>
+                                    </list-property>
+                                    <property name="source">expr</property>
+                                    <property name="type">image/jpeg</property>  <!-- ← НОВАЯ строка между 334 и 335 -->
+                                    <expression name="data" type="javascript">dataSetRow["imageBytes"]</expression>  <!-- строка 335: row → dataSetRow -->
+                                </image>
+                            </cell>
+                            <cell id="7323">
+                                <text id="7324">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="contentType">auto</property>
+                                    <text-property name="content"><![CDATA[  СПРАВКА-ОБЪЕКТИВКА]]></text-property>
+                                </text>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="7017">
+            <column id="7018">
+                <property name="width">6.773333333333333cm</property>
+            </column>
+            <column id="7019">
+                <property name="width">13.6525cm</property>
+            </column>
+            <row id="7020">
+                <cell id="7021">
+                    <data id="7024">
+                        <property name="fontFamily">"Times New Roman"</property>
+                        <property name="dataSet">Data Set</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">fullName</property>
+                                <text-property name="displayName">fullName</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["fullName"]</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">fullName</property>
+                    </data>
+                </cell>
+                <cell id="7022">
+                    <text id="7025">
+                        <property name="fontFamily">"Times New Roman"</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[подполковник таможенной службы]]></text-property>
+                    </text>
+                </cell>
+            </row>
+        </grid>
+        <grid id="7035">
+            <property name="height">10.689166666666667cm</property>
+            <column id="7036"/>
+            <row id="7037">
+                <property name="height">10.689166666666667cm</property>
+                <cell id="7038">
+                    <grid id="7039">
+                        <property name="height">1.9579166666666667cm</property>
+                        <column id="7040"/>
+                        <column id="7041"/>
+                        <row id="7042">
+                            <property name="height">0.6879166666666666cm</property>
+                            <cell id="7043">
+                                <label id="7327">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Число, месяц и год рождения</text-property>
+                                </label>
+                            </cell>
+                            <cell id="7044">
+                                <property name="fontFamily">"Times New Roman"</property>
+                                <label id="7328">
+                                    <text-property name="text">Место рождения</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="7045">
+                            <property name="height">1.0054166666666666cm</property>
+                            <cell id="7046">
+                                <data id="7050">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">birthDay</property>
+                                            <text-property name="displayName">birthDay</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["birthDay"]</expression>
+                                            <property name="dataType">date</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">birthDay</property>
+                                </data>
+                            </cell>
+                            <cell id="7047">
+                                <data id="7051">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">address</property>
+                                            <text-property name="displayName">address</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["address"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">address</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                    <grid id="7056">
+                        <property name="height">1.7197916666666668cm</property>
+                        <column id="7057"/>
+                        <row id="7058">
+                            <property name="height">0.6879166666666666cm</property>
+                            <cell id="7059">
+                                <label id="7326">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Национальность</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="7060">
+                            <property name="height">1.031875cm</property>
+                            <cell id="7061">
+                                <data id="7063">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">nationality</property>
+                                            <text-property name="displayName">nationality</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["nationality"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">nationality</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                    <grid id="7064">
+                        <property name="height">1.6933333333333334cm</property>
+                        <column id="7065"/>
+                        <row id="7066">
+                            <cell id="7067">
+                                <label id="7329">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Гражданство </text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="7068">
+                            <property name="height">1.0054166666666666cm</property>
+                            <cell id="7069">
+                                <data id="7071">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">citizenship</property>
+                                            <text-property name="displayName">citizenship</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["citizenship"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">citizenship</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                    <grid id="7072">
+                        <property name="height">2.143125cm</property>
+                        <column id="7073"/>
+                        <column id="7074"/>
+                        <row id="7075">
+                            <property name="height">0.6879166666666666cm</property>
+                            <cell id="7076">
+                                <label id="7330">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Образование</text-property>
+                                </label>
+                            </cell>
+                            <cell id="7077">
+                                <label id="7331">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Окончил (когда, что)</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="7078">
+                            <property name="height">1.0847916666666666cm</property>
+                            <cell id="7079">
+                                <data id="7083">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">education</property>
+                                            <text-property name="displayName">education</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["education"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">education</property>
+                                </data>
+                            </cell>
+                            <cell id="7080">
+                                <data id="7084">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">graduated</property>
+                                            <text-property name="displayName">graduated</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["graduated"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">graduated</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                    <grid id="7085">
+                        <column id="7086"/>
+                        <column id="7087"/>
+                        <row id="7088">
+                            <cell id="7089">
+                                <label id="7332">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Имеет ли государственные награды</text-property>
+                                </label>
+                            </cell>
+                            <cell id="7090">
+                                <label id="7333">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Является ли депутатом местного Кенеша, Жогорку Кенеша Кыргызской республики</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                    </grid>
+                    <grid id="7098">
+                        <column id="7099"/>
+                        <row id="7100">
+                            <cell id="7101">
+                                <label id="7334">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <text-property name="text">Дисциплинарные взыскания</text-property>
+                                </label>
+                            </cell>
+                        </row>
+                        <row id="7102">
+                            <cell id="7103">
+                                <data id="7105">
+                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="dataSet">Data Set</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">disciplinarySanctions</property>
+                                            <text-property name="displayName">disciplinarySanctions</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["disciplinarySanctions"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">disciplinarySanctions</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
+        <grid id="7106">
+            <property name="height">5.185833333333333cm</property>
+            <column id="7107"/>
+            <row id="7108">
+                <property name="height">5.185833333333333cm</property>
+                <cell id="7109">
+                    <text id="7110">
+                        <property name="fontFamily">"Times New Roman"</property>
+                        <property name="contentType">auto</property>
+                        <text-property name="content"><![CDATA[                                                                            ТРУДОВАЯ ДЕЯТЕЛЬНОСТЬ]]></text-property>
+                    </text>
+                    <text id="7300"/>
+                    <table id="7139">
+                        <column id="7152"/>
+                        <column id="7153"/>
+                        <column id="7154"/>
+                        <header>
+                            <row id="7140">
+                                <cell id="7141">
+                                    <text id="7155">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Месяц и год ]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="7142">
+                                    <text id="7156">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Наименование учреждения,
+организации, предприятия и также
+министерства, ведомства]]></text-property>
+                                    </text>
+                                </cell>
+                                <cell id="7143">
+                                    <text id="7157">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="contentType">auto</property>
+                                        <text-property name="content"><![CDATA[Занимаемая должность]]></text-property>
+                                    </text>
+                                </cell>
+                            </row>
+                        </header>
+                        <detail>
+                            <row id="7144">
+                                <cell id="7145">
+                                    <grid id="7164">
+                                        <column id="7165"/>
+                                        <column id="7166"/>
+                                        <row id="7167">
+                                            <cell id="7168">
+                                                <text id="7170">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="contentType">auto</property>
+                                                    <text-property name="content"><![CDATA[Вступления]]></text-property>
+                                                </text>
+                                            </cell>
+                                            <cell id="7169">
+                                                <text id="7171">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="contentType">auto</property>
+                                                    <text-property name="content"><![CDATA[Ухода]]></text-property>
+                                                </text>
+                                            </cell>
+                                        </row>
+                                    </grid>
+                                </cell>
+                                <cell id="7146"/>
+                                <cell id="7147"/>
+                            </row>
+                        </detail>
+                        <footer>
+                            <row id="7148">
+                                <cell id="7149">
+                                    <grid id="7172">
+                                        <column id="7173"/>
+                                        <column id="7174"/>
+                                        <row id="7175">
+                                            <cell id="7176">
+                                                <table id="7231">
+                                                    <property name="dataSet">workActivities</property>
+                                                    <list-property name="boundDataColumns">
+                                                        <structure>
+                                                            <property name="name">introductionDate</property>
+                                                            <text-property name="displayName">introductionDate</text-property>
+                                                            <expression name="expression" type="javascript">dataSetRow["introductionDate"]</expression>
+                                                            <property name="dataType">date</property>
+                                                        </structure>
+                                                    </list-property>
+                                                    <column id="7240"/>
+                                                    <detail>
+                                                        <row id="7235">
+                                                            <cell id="7236">
+                                                                <data id="7237">
+                                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                                    <property name="resultSetColumn">introductionDate</property>
+                                                                </data>
+                                                            </cell>
+                                                        </row>
+                                                    </detail>
+                                                </table>
+                                            </cell>
+                                            <cell id="7177">
+                                                <table id="7241">
+                                                    <property name="dataSet">workActivities</property>
+                                                    <list-property name="boundDataColumns">
+                                                        <structure>
+                                                            <property name="name">careDate</property>
+                                                            <text-property name="displayName">careDate</text-property>
+                                                            <expression name="expression" type="javascript">dataSetRow["careDate"]</expression>
+                                                            <property name="dataType">date</property>
+                                                        </structure>
+                                                    </list-property>
+                                                    <column id="7250"/>
+                                                    <detail>
+                                                        <row id="7245">
+                                                            <cell id="7246">
+                                                                <data id="7247">
+                                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                                    <property name="resultSetColumn">careDate</property>
+                                                                </data>
+                                                            </cell>
+                                                        </row>
+                                                    </detail>
+                                                </table>
+                                            </cell>
+                                        </row>
+                                    </grid>
+                                </cell>
+                                <cell id="7150">
+                                    <table id="7251">
+                                        <property name="dataSet">workActivities</property>
+                                        <list-property name="boundDataColumns">
+                                            <structure>
+                                                <property name="name">nameOfInstitution</property>
+                                                <text-property name="displayName">nameOfInstitution</text-property>
+                                                <expression name="expression" type="javascript">dataSetRow["nameOfInstitution"]</expression>
+                                                <property name="dataType">string</property>
+                                            </structure>
+                                        </list-property>
+                                        <column id="7260"/>
+                                        <detail>
+                                            <row id="7255">
+                                                <cell id="7256">
+                                                    <data id="7257">
+                                                        <property name="fontFamily">"Times New Roman"</property>
+                                                        <property name="resultSetColumn">nameOfInstitution</property>
+                                                    </data>
+                                                </cell>
+                                            </row>
+                                        </detail>
+                                    </table>
+                                </cell>
+                                <cell id="7151">
+                                    <table id="7261">
+                                        <property name="dataSet">workActivities</property>
+                                        <list-property name="boundDataColumns">
+                                            <structure>
+                                                <property name="name">positionHeld</property>
+                                                <text-property name="displayName">positionHeld</text-property>
+                                                <expression name="expression" type="javascript">dataSetRow["positionHeld"]</expression>
+                                                <property name="dataType">string</property>
+                                            </structure>
+                                        </list-property>
+                                        <column id="7270"/>
+                                        <detail>
+                                            <row id="7265">
+                                                <cell id="7266">
+                                                    <data id="7267">
+                                                        <property name="fontFamily">"Times New Roman"</property>
+                                                        <property name="resultSetColumn">positionHeld</property>
+                                                    </data>
+                                                </cell>
+                                            </row>
+                                        </detail>
+                                    </table>
+                                </cell>
+                            </row>
+                        </footer>
+                    </table>
+                </cell>
+            </row>
+        </grid>
+    </body>
+</report>

@@ -7,4 +7,7 @@
   <birt-template name="Exchange Rates Report" templateLink="exchange_rates.rptdesign"
     format="pdf"/>
 
+  <birt-template name="Employee Report" templateLink="EmployeeReport.rptdesign"
+    metaModel="com.axelor.apps.dictionary.db.DicEmployee" format="pdf"/>
+
 </com.axelor.apps.base.db.BirtTemplate>

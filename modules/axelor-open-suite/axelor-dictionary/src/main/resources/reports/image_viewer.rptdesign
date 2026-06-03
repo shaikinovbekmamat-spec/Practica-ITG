@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.27" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.23.0.v202512100941</property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="IMAGE_ID" id="4">
+            <property name="hidden">false</property>
+            <property name="valueType">static</property>
+            <property name="dataType">integer</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <image id="7">
+            <property name="height">2.5833333333333335in</property>
+            <property name="width">7.03125in</property>
+            <method name="onCreate"><![CDATA[var imgId = params["IMAGE_ID"].value;
+
+var imgData = com.axelor.report.tool.ImageTool.getImageBytes(imgId, true);
+
+if (imgData != null) {
+    this.data = imgData;
+}]]></method>
+            <property name="source">expr</property>
+        </image>
+    </body>
+</report>

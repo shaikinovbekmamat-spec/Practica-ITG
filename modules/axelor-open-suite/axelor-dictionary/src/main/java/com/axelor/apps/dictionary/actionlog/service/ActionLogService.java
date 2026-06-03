@@ -50,7 +50,6 @@ public class ActionLogService {
       data.setCreatedOn(LocalDateTime.now());
     }
 
-
     primaryDbService.saveLog(data);
 
     try {

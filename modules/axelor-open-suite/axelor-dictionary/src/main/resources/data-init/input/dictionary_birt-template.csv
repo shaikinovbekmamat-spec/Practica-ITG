@@ -1,2 +1,3 @@
 "name";"templateLink";"metaModel";"templateEngineSelect";"format";"attach"
 "Exchange Rates";"exchange_rates.rptdesign";"com.axelor.apps.dictionary.db.DicRateCurrency";2;"pdf";false
+"Employee Report";"EmployeeReport.rptdesign";"com.axelor.apps.dictionary.db.DicEmployee";2;"pdf";false

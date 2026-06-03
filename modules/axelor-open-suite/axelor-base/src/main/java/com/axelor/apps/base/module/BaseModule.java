@@ -384,6 +384,7 @@ import com.axelor.apps.base.tracking.AosHibernateConfigurator;
 import com.axelor.apps.base.tracking.ExportObserver;
 import com.axelor.apps.base.tracking.GlobalTrackingLogService;
 import com.axelor.apps.base.tracking.GlobalTrackingLogServiceImpl;
+import com.axelor.apps.base.web.FileViewController;
 import com.axelor.auth.db.repo.UserRepository;
 import com.axelor.auth.pac4j.AuthPac4jUserService;
 import com.axelor.auth.service.PermissionService;
@@ -640,6 +641,7 @@ public class BaseModule extends AxelorModule {
     bind(SequenceDateCheckService.class).to(SequenceDateCheckServiceImpl.class);
     bind(ExportObserver.class);
     addHibernateListenerConfigurator(AosHibernateConfigurator.class);
+    bind(FileViewController.class);
     bind(MapService.class).to(MapServiceImpl.class);
     bind(MapOsmService.class).to(MapOsmServiceImpl.class);
     bind(MapGoogleService.class).to(MapGoogleServiceImpl.class);

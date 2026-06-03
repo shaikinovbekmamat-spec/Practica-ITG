@@ -27,12 +27,17 @@ import com.axelor.apps.dictionary.actionlog.observer.SecurityEventObserver;
 import com.axelor.apps.dictionary.actionlog.service.ActionLogContextService;
 import com.axelor.apps.dictionary.actionlog.service.ActionLogService;
 import com.axelor.apps.dictionary.actionlog.service.SecondDbActionLogService;
-import com.axelor.apps.dictionary.db.repo.DicRateCurrencyRepositoryRepo;
 import com.axelor.apps.dictionary.db.repo.DicRateCurrencyRepository;
+import com.axelor.apps.dictionary.db.repo.DicRateCurrencyRepositoryRepo;
 import com.axelor.apps.dictionary.rateReport.controller.ExchangeRateReportController;
 import com.axelor.apps.dictionary.rateReport.controller.GroupedExchangeRateReportController;
+import com.axelor.apps.dictionary.rateReport.controller.ImageReportController;
+import com.axelor.apps.dictionary.rateReport.dicemployee.controller.DicEmployeeReportController;
+import com.axelor.apps.dictionary.rateReport.dicemployee.service.DicEmployeeReportService;
 import com.axelor.apps.dictionary.rateReport.service.ExchangeRateReportService;
 import com.axelor.apps.dictionary.rateReport.service.GroupedExchangeRateReportService;
+import com.axelor.apps.dictionary.rateReport.service.ImageReportService;
+import com.axelor.apps.dictionary.rateReport.service.ImageReportServiceImpl;
 import com.google.inject.matcher.Matchers;
 
 public class DictionaryModule extends AxelorModule {
@@ -44,9 +49,15 @@ public class DictionaryModule extends AxelorModule {
 
     bind(ExchangeRateReportService.class);
     bind(GroupedExchangeRateReportService.class);
+    bind(ImageReportService.class).to(ImageReportServiceImpl.class);
+
+    bind(DicEmployeeReportService.class);
 
     bind(ExchangeRateReportController.class);
     bind(GroupedExchangeRateReportController.class);
+    bind(ImageReportController.class);
+
+    bind(DicEmployeeReportController.class);
 
     bind(ActionLogContextService.class);
     bind(SecondDbActionLogService.class);

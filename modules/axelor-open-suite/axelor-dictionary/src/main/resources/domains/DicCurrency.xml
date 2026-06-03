@@ -9,6 +9,7 @@
     <string name="name" required="true" title="Currency Name"/>
     <string name="code" required="true" title="Currency Code (ISO)"/>
     <string name="countryCode" title="Country Code"/>
+    <many-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="Image"/>
   </entity>
 
 </domain-models>
