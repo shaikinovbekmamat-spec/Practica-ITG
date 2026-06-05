@@ -68,16 +68,14 @@ public class DicEmployeeReportService {
     }
   }
 
-  public String generateEmployeeReport(DicEmployee employee) throws Exception {
+  public String generateEmployeeReport(DicEmployee employee, String format) throws Exception {
     DicEmployeeReportData data = DicEmployeeReportData.from(employee);
     String jsonData = mapper.writeValueAsString(data);
 
     log.info("Generated JSON data (length: {})", jsonData.length());
 
-    // Проверяем, что imageBytes правильно сериализовался
     if (data.getImageBytes() != null) {
       log.info("Image bytes length in DTO: {}", data.getImageBytes().length);
-      // Проверяем, что в JSON есть Base64 строка, а не массив
       if (jsonData.contains("\"imageBytes\":\"")) {
         log.info("Image bytes successfully serialized as Base64 string");
       } else {
@@ -87,11 +85,26 @@ public class DicEmployeeReportService {
       log.warn("Image bytes are null in DTO");
     }
 
-    return ReportFactory.createReport(IDictionaryReport.EMPLOYEE_REPORT, "Employee-${date}")
-        .addFormat(ReportSettings.FORMAT_PDF)
-        .addParam("JsonData", jsonData)
-        .addParam("__locale", ReportSettings.getPrintingLocale())
-        .generate()
-        .getFileLink();
+    ReportSettings settings =
+        ReportFactory.createReport(IDictionaryReport.EMPLOYEE_REPORT, "Employee-${date}")
+            .addFormat(format)
+            .addParam("JsonData", jsonData)
+            .addParam("__locale", ReportSettings.getPrintingLocale())
+            .generate();
+
+    String fileName = settings.getOutputName();
+    java.io.File file = settings.getFile();
+
+    if (file != null && format != null) {
+      java.nio.file.Path src = file.toPath();
+      java.nio.file.Path dest =
+          java.nio.file.Files.move(
+              src,
+              src.resolveSibling(fileName + "." + format),
+              java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+      file = dest.toFile();
+    }
+
+    return com.axelor.utils.helpers.file.PdfHelper.getFileLinkFromPdfFile(file, fileName);
   }
 }

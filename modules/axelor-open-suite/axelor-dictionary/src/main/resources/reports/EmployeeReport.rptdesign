@@ -178,11 +178,12 @@ if (jsonString != null && jsonString != "") {
     var imageNode = dataObject.get("imageBytes");
     if (imageNode != null && !imageNode.isNull()) {
         try {
-            // Используем явный вызов пакета Java для декодирования Base64
+            // Прямое декодирование Base64 как в вашей инструкции
             row["imageBytes"] = Packages.java.util.Base64.getDecoder().decode(imageNode.asText());
+            java.lang.System.out.println("BIRT: Image decoded via Base64. Size: " + row["imageBytes"].length);
         } catch (e) {
-            // Фолбэк на встроенный метод Jackson, если Base64 не сработал
-            row["imageBytes"] = imageNode.binaryValue();
+            java.lang.System.out.println("BIRT: Base64 decode failed: " + e);
+            row["imageBytes"] = null;
         }
     } else {
         row["imageBytes"] = null;
@@ -313,9 +314,9 @@ rowIndex = 0;]]></method>
                         <row id="7321">
                             <property name="height">4cm</property>
                             <cell id="7322">
-                                <image id="7354">
+                                <image id="7400">
                                     <property name="height">4cm</property>
-                                    <property name="width">3cm</property>
+                                    <property name="width">3.2cm</property>
                                     <property name="dataSet">Data Set</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
@@ -325,15 +326,12 @@ rowIndex = 0;]]></method>
                                             <property name="dataType">blob</property>
                                         </structure>
                                     </list-property>
-                                    <list-property name="visibility">
-                                        <structure>
-                                            <property name="format">all</property>
-                                            <expression name="valueExpr" type="javascript">dataSetRow["imageBytes"] == null</expression>  <!-- строка 331: row → dataSetRow -->
-                                        </structure>
-                                    </list-property>
                                     <property name="source">expr</property>
-                                    <property name="type">image/jpeg</property>  <!-- ← НОВАЯ строка между 334 и 335 -->
-                                    <expression name="data" type="javascript">dataSetRow["imageBytes"]</expression>  <!-- строка 335: row → dataSetRow -->
+                                    <expression name="expression" type="javascript">row["imageBytes"]</expression>
+                                    <method name="onCreate"><![CDATA[if (row["imageBytes"] != null) {
+    this.data = row["imageBytes"];
+    java.lang.System.out.println("BIRT Image Element: Data received, size: " + this.data.length);
+}]]></method>
                                 </image>
                             </cell>
                             <cell id="7323">
@@ -477,7 +475,7 @@ rowIndex = 0;]]></method>
                         <row id="7066">
                             <cell id="7067">
                                 <label id="7329">
-                                    <property name="fontFamily">"Times New Roman"</property>
+                                    <property name="fontFamily" >"Times New Roman"</property>
                                     <text-property name="text">Гражданство </text-property>
                                 </label>
                             </cell>

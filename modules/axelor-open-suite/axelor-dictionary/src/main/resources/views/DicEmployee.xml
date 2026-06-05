@@ -8,6 +8,8 @@
     <toolbar>
       <button name="btnPrintReport" title="Print Report" icon="fa-print"
         onClick="action-dictionary-employee-method-print-report"/>
+      <button name="btnDownloadReport" title="Download" icon="fa-download"
+        onClick="save,action-dictionary-employee-view-report-download-wizard"/>
     </toolbar>
     <field name="fullName"/>
     <field name="address"/>
@@ -21,6 +23,8 @@
     <toolbar>
       <button name="btnPrintReport" title="Print Report" icon="fa-print"
         onClick="save,action-dictionary-employee-method-print-report"/>
+      <button name="btnDownloadReport" title="Download" icon="fa-download"
+        onClick="save,action-dictionary-employee-view-report-download-wizard"/>
     </toolbar>
     <panel name="main-panel">
       <field name="fullName"/>
@@ -67,5 +71,39 @@
       class="com.axelor.apps.dictionary.rateReport.dicemployee.controller.DicEmployeeReportController"
       method="printReport"/>
   </action-method>
+
+  <form name="dic-employee-report-download-wizard-form" title="Download employee report"
+    model="com.axelor.utils.db.Wizard">
+    <panel name="main-panel">
+      <button name="downloadPdfBtn" title="PDF" icon="fa-file-pdf-o"
+        onClick="action-dictionary-employee-method-download-report-pdf,close" colSpan="6"/>
+      <button name="downloadWordBtn" title="Word" icon="fa-file-word-o"
+        onClick="action-dictionary-employee-method-download-report-word,close" colSpan="6"/>
+    </panel>
+  </form>
+
+  <action-method name="action-dictionary-employee-method-download-report-pdf">
+    <call
+      class="com.axelor.apps.dictionary.rateReport.dicemployee.controller.DicEmployeeReportController"
+      method="downloadReportPdf"/>
+  </action-method>
+
+  <action-method name="action-dictionary-employee-method-download-report-word">
+    <call
+      class="com.axelor.apps.dictionary.rateReport.dicemployee.controller.DicEmployeeReportController"
+      method="downloadReportWord"/>
+  </action-method>
+
+  <action-view name="action-dictionary-employee-view-report-download-wizard"
+    title="Download employee report" model="com.axelor.utils.db.Wizard">
+    <view type="form" name="dic-employee-report-download-wizard-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="forceEdit" value="true"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="show-confirm" value="false"/>
+    <view-param name="popup-save" value="false"/>
+    <context name="_employeeId" expr="eval: id"/>
+    <context name="_employeeIds" expr="eval: _ids"/>
+  </action-view>
 
 </object-views>

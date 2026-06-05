@@ -41,6 +41,7 @@ public class DicEmployeeWorkActivityData {
     if (workActivity == null) {
       return null;
     }
+
     return DicEmployeeWorkActivityData.builder()
         .introductionDate(
             workActivity.getIntroductionDate() != null

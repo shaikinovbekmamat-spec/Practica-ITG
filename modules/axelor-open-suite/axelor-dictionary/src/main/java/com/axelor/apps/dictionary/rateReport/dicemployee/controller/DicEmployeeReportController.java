@@ -22,6 +22,7 @@ import com.axelor.apps.dictionary.actionlog.annotation.ActionLog;
 import com.axelor.apps.dictionary.db.DicEmployee;
 import com.axelor.apps.dictionary.db.repo.DicEmployeeRepository;
 import com.axelor.apps.dictionary.rateReport.dicemployee.service.DicEmployeeReportService;
+import com.axelor.apps.report.engine.ReportSettings;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.meta.schema.actions.ActionView.ActionViewBuilder;
 import com.axelor.rpc.ActionRequest;
@@ -54,6 +55,33 @@ public class DicEmployeeReportController {
       return;
     }
 
+    generateEmployeeReport(response, employeeId, ReportSettings.FORMAT_PDF, false);
+  }
+
+  public void downloadReportPdf(ActionRequest request, ActionResponse response) {
+    Long employeeId = getEmployeeId(request.getContext());
+
+    if (employeeId == null) {
+      response.setError("Please save the employee first.");
+      return;
+    }
+
+    generateEmployeeReport(response, employeeId, ReportSettings.FORMAT_PDF, true);
+  }
+
+  public void downloadReportWord(ActionRequest request, ActionResponse response) {
+    Long employeeId = getEmployeeId(request.getContext());
+
+    if (employeeId == null) {
+      response.setError("Please save the employee first.");
+      return;
+    }
+
+    generateEmployeeReport(response, employeeId, ReportSettings.FORMAT_DOCX, true);
+  }
+
+  private void generateEmployeeReport(
+      ActionResponse response, Long employeeId, String format, boolean download) {
     DicEmployee employee = dicEmployeeRepository.find(employeeId);
     if (employee == null) {
       response.setError("Employee not found.");
@@ -61,8 +89,11 @@ public class DicEmployeeReportController {
     }
 
     try {
-      String fileLink = dicEmployeeReportService.generateEmployeeReport(employee);
+      String fileLink = dicEmployeeReportService.generateEmployeeReport(employee, format);
       ActionViewBuilder viewBuilder = ActionView.define("Employee Report").add("html", fileLink);
+      if (download || !ReportSettings.FORMAT_PDF.equalsIgnoreCase(format)) {
+        viewBuilder.param("download", "true");
+      }
       response.setView(viewBuilder.map());
     } catch (Exception e) {
       response.setError("Error generating report: " + e.getMessage());
@@ -70,7 +101,18 @@ public class DicEmployeeReportController {
   }
 
   private Long getEmployeeId(Context context) {
-    Object employeeIdObj = context.get("id");
+    Object employeeIdObj = context.get("_employeeId");
+    Object employeeIdsObj = context.get("_employeeIds");
+
+    if (employeeIdObj == null
+        && employeeIdsObj instanceof List<?> employeeIds
+        && !employeeIds.isEmpty()) {
+      employeeIdObj = employeeIds.get(0);
+    }
+
+    if (employeeIdObj == null) {
+      employeeIdObj = context.get("id");
+    }
     if (employeeIdObj == null) {
       employeeIdObj = context.get("_id");
     }

@@ -18,6 +18,7 @@
  */
 package com.axelor.apps.dictionary.rateReport.controller;
 
+import com.axelor.apps.dictionary.actionlog.annotation.ActionLog;
 import com.axelor.apps.dictionary.db.DicCurrency;
 import com.axelor.apps.dictionary.db.repo.DicCurrencyRepository;
 import com.axelor.apps.dictionary.rateReport.service.ImageReportService;
@@ -45,6 +46,7 @@ public class ImageReportController {
     this.imageReportService = imageReportService;
   }
 
+  @ActionLog
   public void showImage(ActionRequest request, ActionResponse response) {
     Context context = request.getContext();
     Object formatObj = context.get("$reportFormat");
